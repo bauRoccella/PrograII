@@ -5,20 +5,20 @@ import java.util.List;
 
 public class Theatre {
     private static Theatre instance;
-    private final List<Room> rooms;
+    private final Room[] rooms;
 
-    private Theatre() {
-        this.rooms = new ArrayList<>();
+    private Theatre(int numberOfRooms) {
+        this.rooms = new Room[numberOfRooms];
     }
 
-    public static Theatre getInstance() {
+    public static Theatre getInstance(int numberOfRooms) {
         if (instance == null) {
-            instance = new Theatre();
+            instance = new Theatre(numberOfRooms);
         }
         return instance;
     }
 
-    public List<Room> getRooms() {
+    public Room[] getRooms() {
         return rooms;
     }
 }

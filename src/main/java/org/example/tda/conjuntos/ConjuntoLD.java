@@ -1,8 +1,10 @@
 package org.example.tda.conjuntos;
 
+import org.example.model.Ticket;
+
 public class ConjuntoLD implements ConjuntoTDA {
 	private class Nodo { // la c�lula de la estructura
-		int info; // el valor almacenado
+		Ticket info; // el valor almacenado
 		Nodo sig; // la referencia al siguiente nodo
 	}
 

@@ -6,7 +6,7 @@ public class Ticket {
 
     private int seat; // numero de asiento
     private int room; // numero de sala
-    private LocalTime startTime; // hora a en la que arranca la funcion
+    private int startTime; // hora a en la que arranca la funcion
     private Boolean isUsed = false; // indica si ya se uso la entrada
 
     private static int globalTicketId = 1; // numero compartido entre todos los tickets que nadie puede modificar
@@ -14,7 +14,7 @@ public class Ticket {
 
     // podriamos agregarle fecha, numero de funcion, precio, si tuvo o no un descuento, etc.
 
-    public Ticket (String movieTitle, int seat, int room, LocalTime startTime) {
+    public Ticket (String movieTitle, int seat, int room, int startTime) {
 
         this.seat = seat;
         this.room = room;
@@ -33,7 +33,7 @@ public class Ticket {
         return room;
     }
 
-    public LocalTime getStartTime() {
+    public int getStartTime() {
         return startTime;
     }
 
@@ -45,7 +45,8 @@ public class Ticket {
         return ticketId;
     }
 
-    public void Pierce(){
+    public void Use(){
         this.isUsed = true;
     }
+
 }
