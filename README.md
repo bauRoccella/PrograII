@@ -26,7 +26,7 @@ El proyecto está organizado en los siguientes paquetes principales:
   Lo mismo ocurre con (`ConjuntoTicket`)
 ---
 
-## ✨ Funcionalidades Principales
+## Funcionalidades Principales
 
 ### 1. Gestión de Salas (`Room`)
 Cada sala tiene:
