@@ -2,7 +2,7 @@ package org.example.tda.conjuntos;
 
 import org.example.model.Ticket;
 
-public class ConjuntoTickets {
+public class ConjuntoTicket {
     private class Nodo {
         Ticket info;
         Nodo sig;

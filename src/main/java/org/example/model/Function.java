@@ -1,8 +1,6 @@
 package org.example.model;
 
-import org.example.tda.conjuntos.ConjuntoTDA;
-
-import java.time.LocalTime;
+import org.example.tda.conjuntos.ConjuntoTicket;
 
 public class Function {
 
@@ -11,7 +9,7 @@ public class Function {
     private final String movieTitle; // titulo de la pelicula que se va a proyectar
     private final LanguageType languageType; // si la pelicula doblada o subtitulada
     private final boolean is3d;
-    private ConjuntoTDA ticketSet; // conjunto de tickets usados para esta funcion
+    private ConjuntoTicket ticketSet; // conjunto de tickets usados para esta funcion
     private final int startTime; // expresado en horario militar (ej: 14:30 = 1430)
 
     public Function(String movieTitle,
@@ -24,7 +22,8 @@ public class Function {
         this.languageType = languageType;
         this.is3d = is3d;
         this.startTime = startTime;
-        this.ticketSet = new ConjuntoTDA(); // inicializa el conjunto de tickets
+        this.ticketSet = new ConjuntoTicket();
+        this.ticketSet.InicializarConjunto();
 
     }
 
@@ -47,4 +46,16 @@ public class Function {
     public int getStartTime() {
         return startTime;
     }
+
+    public void registerTicket(Ticket ticket) {
+        if (ticket.getIsUsed()) {
+            System.out.println("El ticket ya fue usado.");
+        } else {
+            ticket.Use();
+            ticketSet.Agregar(ticket);
+
+            System.out.println("Ticket registrado con exito.");
+        }
+    }
+
 }
