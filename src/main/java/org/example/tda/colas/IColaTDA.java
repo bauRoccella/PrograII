@@ -1,6 +1,6 @@
 package org.example.tda.colas;
 
-public interface ColaTDA {
+public interface IColaTDA {
 	void InicializarCola(); // pre: no aplica.
 	void Acolar(int x); // pre: cola inicializada.
 	void Desacolar(); // pre: cola inicializada y no vac�a.

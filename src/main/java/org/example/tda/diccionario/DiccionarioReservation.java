@@ -1,10 +1,10 @@
 package org.example.tda.diccionario;
 
 import org.example.model.Reservation;
-import org.example.tda.conjuntos.ConjuntoLD;
-import org.example.tda.conjuntos.ConjuntoTDA;
+import org.example.tda.conjuntos.ConjuntoReservation;
+import org.example.tda.conjuntos.IConjuntoReservation;
 
-public class DiccionarioReservation implements DiccionarioSimpleTDA {
+public class DiccionarioReservation implements IDiccionarioReservation {
     private class NodoReservation {
         int clave;
         Reservation valor;
@@ -18,9 +18,7 @@ public class DiccionarioReservation implements DiccionarioSimpleTDA {
         origen = null;
     }
 
-
-
-    public void Agregar(int clave, Reservation reserva) {
+    public void agregarReservation(int clave, Reservation reserva) {
         NodoReservation nodo = Buscar(clave);
         if (nodo == null) {
             nodo = new NodoReservation();
@@ -29,6 +27,11 @@ public class DiccionarioReservation implements DiccionarioSimpleTDA {
             origen = nodo;
         }
         nodo.valor = reserva;
+    }
+
+    @Override
+    public void Agregar(int clave, Reservation reservation) {
+        agregarReservation(clave, reservation);
     }
 
     @Override
@@ -48,8 +51,7 @@ public class DiccionarioReservation implements DiccionarioSimpleTDA {
 
     @Override
     public Reservation Recuperar(int clave) {
-        // Este método no se usará directamente
-        throw new UnsupportedOperationException("Use recuperarReservation instead");
+        return recuperarReservation(clave);
     }
 
     public Reservation recuperarReservation(int clave) {
@@ -65,12 +67,12 @@ public class DiccionarioReservation implements DiccionarioSimpleTDA {
     }
 
     @Override
-    public ConjuntoTDA Claves() {
-        ConjuntoTDA conjunto = new ConjuntoLD();
+    public IConjuntoReservation Claves() {
+        IConjuntoReservation conjunto = new ConjuntoReservation();
         conjunto.InicializarConjunto();
         NodoReservation aux = origen;
         while (aux != null) {
-            conjunto.Agregar(aux.clave);
+            conjunto.Agregar(aux.valor);
             aux = aux.sig;
         }
         return conjunto;

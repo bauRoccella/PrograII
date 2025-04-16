@@ -2,7 +2,7 @@ package org.example.tda.colas;
 
 import org.example.model.WaitingListEntry;
 
-public class ColaWaitingList {
+public class ColaWaitingList implements IColaWaitingList {
     private class Nodo {
         WaitingListEntry info;
         Nodo sig;

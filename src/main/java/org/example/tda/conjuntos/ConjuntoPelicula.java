@@ -1,9 +1,9 @@
 package org.example.tda.conjuntos;
 
+
 import org.example.model.Film;
 
-
-public class ConjuntoPelicula implements ConjuntoTDA {
+public class ConjuntoPelicula implements IConjuntoPelicula {
     private class Nodo {
         Film info;
         Nodo sig;
@@ -22,6 +22,11 @@ public class ConjuntoPelicula implements ConjuntoTDA {
             nuevo.sig = c;
             c = nuevo;
         }
+    }
+
+    @Override
+    public Film Elegir() {
+        return c.info;
     }
 
     public void Sacar(Film p) {
@@ -53,14 +58,14 @@ public class ConjuntoPelicula implements ConjuntoTDA {
         return c.info;
     }
 
-    public boolean TodosPertenecen(ConjuntoPelicula otro) {
+    public boolean TodosPertenecen(IConjuntoPelicula otro) {
         ConjuntoPelicula aux = new ConjuntoPelicula();
         aux.InicializarConjunto();
 
         boolean todos = true;
 
         while (!otro.ConjuntoVacio() && todos) {
-            Film p = otro.ElegirPelicula();
+            Film p = otro.Elegir();
             if (!this.Pertenece(p)) {
                 todos = false;
             } else {
@@ -78,12 +83,12 @@ public class ConjuntoPelicula implements ConjuntoTDA {
         return todos;
     }
 
-    public void SacarTodos(ConjuntoPelicula otro) {
+    public void SacarTodos(IConjuntoPelicula otro) {
         ConjuntoPelicula aux = new ConjuntoPelicula();
         aux.InicializarConjunto();
 
         while (!otro.ConjuntoVacio()) {
-            Film p = otro.ElegirPelicula();
+            Film p = otro.Elegir();
             this.Sacar(p);
             aux.Agregar(p);
             otro.Sacar(p);

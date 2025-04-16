@@ -3,7 +3,7 @@ package org.example.model;
 import org.example.tda.colas.ColaFunctions;
 import org.example.tda.conjuntos.ConjuntoLD;
 import org.example.tda.conjuntos.ConjuntoPelicula;
-import org.example.tda.conjuntos.ConjuntoTDA;
+import org.example.tda.conjuntos.IConjuntoTDA;
 import org.example.tda.diccionario.DiccionarioReservation;
 
 public class Theatre {
@@ -86,7 +86,7 @@ public class Theatre {
         }
     }
 
-    public ConjuntoTDA getAllReservationIds() {
+    public IConjuntoTDA getAllReservationIds() {
         return reservations.Claves();
     }
 
@@ -147,7 +147,7 @@ public class Theatre {
                     System.out.println("Sala: " + (room.getRoomNumber() + 1));
                     System.out.println("Película: " + function.getMovieTitle());
                     System.out.println("Horario: " + function.getStartTime());
-                    System.out.println("Asientos disponibles: " + function.hasAvailableSeats());
+                    System.out.println("Asientos disponibles: " + function.getAvailableSeats());
                     System.out.println("----------------------------------");
                 }
 
@@ -173,8 +173,8 @@ public class Theatre {
         }
 
         // Crear una copia temporal del conjunto de claves
-        ConjuntoTDA claves = reservations.Claves();
-        ConjuntoTDA clavesTemp = new ConjuntoLD();
+        IConjuntoTDA claves = reservations.Claves();
+        IConjuntoTDA clavesTemp = new ConjuntoLD();
         clavesTemp.InicializarConjunto();
 
         while (!claves.ConjuntoVacio()) {

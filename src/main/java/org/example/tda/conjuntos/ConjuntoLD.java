@@ -1,8 +1,6 @@
 package org.example.tda.conjuntos;
 
-import org.example.model.Film;
-
-public class ConjuntoLD implements ConjuntoTDA {
+public class ConjuntoLD implements IConjuntoTDA {
 	private class Nodo { // la c�lula de la estructura
 		int info; // el valor almacenado
 		Nodo sig; // la referencia al siguiente nodo
@@ -62,9 +60,9 @@ public class ConjuntoLD implements ConjuntoTDA {
 	 * dado. Debe preservar el conjunto X.
 	 */
 	@Override
-	public boolean TodosPertenecen(ConjuntoTDA x) {
+	public boolean TodosPertenecen(IConjuntoTDA x) {
 		// Creo el conjunto auxiliar
-		ConjuntoTDA aux = new ConjuntoLD();
+		IConjuntoTDA aux = new ConjuntoLD();
 		aux.InicializarConjunto();
 
 		boolean respuesta = true; // SUPONGO todos pertenecen
@@ -95,9 +93,9 @@ public class ConjuntoLD implements ConjuntoTDA {
 	}
 
 	@Override
-	public void SacarTodos(ConjuntoTDA x) {
+	public void SacarTodos(IConjuntoTDA x) {
 		// Creo el conjunto auxiliar
-		ConjuntoTDA aux = new ConjuntoLD();
+		IConjuntoTDA aux = new ConjuntoLD();
 		aux.InicializarConjunto();
 
 		// Vaciar el conjunto x y pasar los valores a aux
@@ -116,8 +114,8 @@ public class ConjuntoLD implements ConjuntoTDA {
 		}
 	}
 
-	public boolean TodosPertenecen2(ConjuntoTDA x) {
-		ConjuntoTDA aux = new ConjuntoLD();
+	public boolean TodosPertenecen2(IConjuntoTDA x) {
+		IConjuntoTDA aux = new ConjuntoLD();
 		aux.InicializarConjunto();
 
 		int valor = x.Elegir();
