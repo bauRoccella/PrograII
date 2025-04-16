@@ -1,8 +1,10 @@
 package org.example.tda.diccionario;
 
 import org.example.model.Reservation;
+import org.example.tda.conjuntos.ConjuntoLD;
 import org.example.tda.conjuntos.ConjuntoReservation;
 import org.example.tda.conjuntos.IConjuntoReservation;
+import org.example.tda.conjuntos.IConjuntoTDA;
 
 public class DiccionarioReservation implements IDiccionarioReservation {
     private class NodoReservation {
@@ -51,10 +53,6 @@ public class DiccionarioReservation implements IDiccionarioReservation {
 
     @Override
     public Reservation Recuperar(int clave) {
-        return recuperarReservation(clave);
-    }
-
-    public Reservation recuperarReservation(int clave) {
         NodoReservation nodo = Buscar(clave);
         return nodo != null ? nodo.valor : null;
     }
@@ -67,14 +65,15 @@ public class DiccionarioReservation implements IDiccionarioReservation {
     }
 
     @Override
-    public IConjuntoReservation Claves() {
-        IConjuntoReservation conjunto = new ConjuntoReservation();
+    public IConjuntoTDA Claves() {
+        IConjuntoTDA conjunto = new ConjuntoLD();
         conjunto.InicializarConjunto();
         NodoReservation aux = origen;
         while (aux != null) {
-            conjunto.Agregar(aux.valor);
+            conjunto.Agregar(aux.clave); // Agregamos la clave (int), no el valor
             aux = aux.sig;
         }
         return conjunto;
     }
+}
 }

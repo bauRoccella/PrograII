@@ -1,9 +1,7 @@
 package org.example.model;
 
 import org.example.tda.colas.ColaFunctions;
-import org.example.tda.conjuntos.ConjuntoLD;
-import org.example.tda.conjuntos.ConjuntoPelicula;
-import org.example.tda.conjuntos.IConjuntoTDA;
+import org.example.tda.conjuntos.*;
 import org.example.tda.diccionario.DiccionarioReservation;
 
 public class Theatre {
@@ -59,7 +57,7 @@ public class Theatre {
     }
 
     public Reservation getReservation(int reservationId) {
-        return reservations.recuperarReservation(reservationId);
+        return reservations.Recuperar(reservationId);
     }
 
     public void cancelReservation(int reservationId) {
@@ -124,7 +122,6 @@ public class Theatre {
         return false;
     }
 
-    // Agregar a la clase Theatre
     public void listFunctionsByGenre(String genre) {
         System.out.println("Funciones del género: " + genre);
         System.out.println("----------------------------------");
@@ -167,13 +164,13 @@ public class Theatre {
         System.out.println("ESTADO DE LAS RESERVAS");
         System.out.println("==================================");
 
-        if (reservations.Claves().ConjuntoVacio()) {
+        IConjuntoTDA claves = reservations.Claves();
+
+        if (claves.ConjuntoVacio()) {
             System.out.println("No hay reservas en el sistema.");
             return;
         }
 
-        // Crear una copia temporal del conjunto de claves
-        IConjuntoTDA claves = reservations.Claves();
         IConjuntoTDA clavesTemp = new ConjuntoLD();
         clavesTemp.InicializarConjunto();
 
@@ -182,7 +179,7 @@ public class Theatre {
             claves.Sacar(reservationId);
             clavesTemp.Agregar(reservationId);
 
-            Reservation reservation = reservations.recuperarReservation(reservationId);
+            Reservation reservation = reservations.Recuperar(reservationId);
             if (reservation != null) {
                 System.out.println("Reserva #" + reservationId);
                 System.out.println("Cliente: " + reservation.getClientName());
