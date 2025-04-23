@@ -1,6 +1,6 @@
 package org.example.model;
 
-
+// no sirve de nada
 public class Ticket {
 
     private int seat; // numero de asiento

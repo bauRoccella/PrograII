@@ -2,78 +2,107 @@ package org.example.tda.diccionario;
 
 import org.example.model.Reservation;
 import org.example.tda.conjuntos.ConjuntoLD;
-import org.example.tda.conjuntos.ConjuntoReservation;
-import org.example.tda.conjuntos.IConjuntoReservation;
 import org.example.tda.conjuntos.IConjuntoTDA;
 
 public class DiccionarioReservation implements IDiccionarioReservation {
-    private class NodoReservation {
+    private static class Elemento {
         int clave;
         Reservation valor;
-        NodoReservation sig;
     }
 
-    private NodoReservation origen;
+    private Elemento[] elementos;
+    private int cant;
+    private int capacidad;
 
     @Override
     public void InicializarDiccionario() {
-        origen = null;
+        capacidad = 100; // Configurable capacity
+        elementos = new Elemento[capacidad];
+        cant = 0;
     }
 
-    public void agregarReservation(int clave, Reservation reserva) {
-        NodoReservation nodo = Buscar(clave);
-        if (nodo == null) {
-            nodo = new NodoReservation();
-            nodo.clave = clave;
-            nodo.sig = origen;
-            origen = nodo;
-        }
-        nodo.valor = reserva;
+    /**
+     * Constructor that allows setting custom capacity
+     */
+    public void InicializarDiccionario(int capacidad) {
+        this.capacidad = capacidad;
+        elementos = new Elemento[capacidad];
+        cant = 0;
     }
 
     @Override
-    public void Agregar(int clave, Reservation reservation) {
-        agregarReservation(clave, reservation);
+    public void Agregar(int clave, Reservation reserva) {
+        int pos = Clave2Indice(clave);
+        if (pos == -1) { // No existe, se agrega nuevo
+            if (cant < capacidad) {
+                pos = cant;
+                elementos[pos] = new Elemento();
+                elementos[pos].clave = clave;
+                elementos[pos].valor = reserva;
+                cant++;
+            } else {
+                throw new IllegalStateException("El diccionario de reservas está lleno");
+            }
+        } else {
+            elementos[pos].valor = reserva;
+        }
     }
 
     @Override
     public void Eliminar(int clave) {
-        if (origen != null) {
-            if (origen.clave == clave) {
-                origen = origen.sig;
-            } else {
-                NodoReservation aux = origen;
-                while (aux.sig != null && aux.sig.clave != clave)
-                    aux = aux.sig;
-                if (aux.sig != null)
-                    aux.sig = aux.sig.sig;
-            }
+        int pos = Clave2Indice(clave);
+        if (pos != -1) {
+            elementos[pos] = elementos[cant - 1]; // Reemplazar con el último
+            cant--;
         }
     }
 
     @Override
     public Reservation Recuperar(int clave) {
-        NodoReservation nodo = Buscar(clave);
-        return nodo != null ? nodo.valor : null;
-    }
-
-    private NodoReservation Buscar(int clave) {
-        NodoReservation aux = origen;
-        while (aux != null && aux.clave != clave)
-            aux = aux.sig;
-        return aux;
+        int pos = Clave2Indice(clave);
+        if (pos != -1) {
+            return elementos[pos].valor;
+        }
+        return null;
     }
 
     @Override
     public IConjuntoTDA Claves() {
         IConjuntoTDA conjunto = new ConjuntoLD();
         conjunto.InicializarConjunto();
-        NodoReservation aux = origen;
-        while (aux != null) {
-            conjunto.Agregar(aux.clave); // Agregamos la clave (int), no el valor
-            aux = aux.sig;
+        for (int i = 0; i < cant; i++) {
+            conjunto.Agregar(elementos[i].clave);
         }
         return conjunto;
     }
-}
+
+    private int Clave2Indice(int clave) {
+        for (int i = 0; i < cant; i++) {
+            if (elementos[i].clave == clave) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Verifica si el diccionario está lleno
+     */
+    public boolean estaLleno() {
+        return cant >= capacidad;
+    }
+
+    /**
+     * Devuelve la cantidad actual de elementos
+     */
+    public int getCantidad() {
+        return cant;
+    }
+
+    /**
+     * Devuelve la capacidad máxima
+     */
+    public int getCapacidad() {
+        return capacidad;
+    }
 }

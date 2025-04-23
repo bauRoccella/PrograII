@@ -52,7 +52,7 @@ public class Theatre {
         int reservationId = nextReservationId++;
         Reservation reservation = new Reservation(reservationId, clientName,
                 clientContact, function, numberOfSeats);
-        reservations.agregarReservation(reservationId, reservation);
+        reservations.Agregar(reservationId, reservation);
         return reservationId;
     }
 
@@ -122,7 +122,7 @@ public class Theatre {
         return false;
     }
 
-    public void listFunctionsByGenre(String genre) {
+    public void listFunctionsByGenre(Genre genre) {
         System.out.println("Funciones del género: " + genre);
         System.out.println("----------------------------------");
 
@@ -131,7 +131,7 @@ public class Theatre {
                 continue;
             }
 
-            // Necesitamos hacer una copia temporal de la cola para no alterarla
+            // hacemos una copia temporal de la cola para no alterarla
             ColaFunctions tempFunctions = new ColaFunctions();
             tempFunctions.InicializarCola();
 
@@ -139,8 +139,8 @@ public class Theatre {
                 Function function = room.getFunctions().Primero();
                 room.getFunctions().Desacolar();
 
-                // Si coincide con el género buscado, lo mostramos
-                if (function.getGenre().equalsIgnoreCase(genre)) {
+                // si coincide el genero lo muestra
+                if (function.getGenre() == genre) {
                     System.out.println("Sala: " + (room.getRoomNumber() + 1));
                     System.out.println("Película: " + function.getMovieTitle());
                     System.out.println("Horario: " + function.getStartTime());
@@ -148,11 +148,11 @@ public class Theatre {
                     System.out.println("----------------------------------");
                 }
 
-                // Guardamos la función en la cola temporal
+                // guardamos en la cola auxiliar
                 tempFunctions.Acolar(function);
             }
 
-            // Restauramos la cola original
+            // restauramos la original
             while (!tempFunctions.ColaVacia()) {
                 room.getFunctions().Acolar(tempFunctions.Primero());
                 tempFunctions.Desacolar();
@@ -191,12 +191,14 @@ public class Theatre {
             }
         }
 
-        // Restaurar las claves
+        // restaura las claves
         while (!clavesTemp.ConjuntoVacio()) {
             int reservationId = clavesTemp.Elegir();
             claves.Agregar(reservationId);
             clavesTemp.Sacar(reservationId);
         }
     }
+
+
 
 }

@@ -5,14 +5,14 @@ import java.util.Objects;
 public class Film {
     private final String title;
     private final int duration;
-    private final String genre;
-    private final String rating;
+    private final Genre genre;
+    private final int rating;
 
-    public Film(String title, int duration, String genre, String rating) {
+    public Film(String title, int duration, Genre genre, int rating) {
         this.title = title;
-        this.duration = duration;
+        this.duration = duration; // min en int
         this.genre = genre;
-        this.rating = rating;
+        this.rating = rating; // rating podria ser puntaje o clasificacion segun la traduccion
     }
 
     public String getTitle() {
@@ -23,11 +23,11 @@ public class Film {
         return duration;
     }
 
-    public String getGenre() {
+    public Genre getGenre() {
         return genre;
     }
 
-    public String getRating() {
+    public int getRating() {
         return rating;
     }
 

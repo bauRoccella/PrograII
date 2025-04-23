@@ -51,14 +51,6 @@ public class ConjuntoLD implements IConjuntoTDA {
 		return (c == null);
 	}
 
-	/*
-	 * 2. [40 puntos] Modificación de la Interfaz ConjuntoTDA. Se desea agregar dos
-	 * nuevos métodos a la interfaz ConjuntoTDA:  Método TodosPertenecen: Devuelve
-	 * true si todos los elementos de un conjunto X están en el conjunto actual,
-	 * false en caso contrario. Debe preservar el conjunto X.  Método SacarTodos:
-	 * Elimina del conjunto actual todos los elementos que estén en un conjunto X
-	 * dado. Debe preservar el conjunto X.
-	 */
 	@Override
 	public boolean TodosPertenecen(IConjuntoTDA x) {
 		// Creo el conjunto auxiliar

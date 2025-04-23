@@ -4,7 +4,7 @@ public class WaitingListEntry {
     private final String clientName;
     private final String clientContact;
     private final int numberOfSeats;
-    private final int entryTime; // Timestamp para priorizar por orden de llegada
+    private final int entryTime; // timestamp para priorizar por orden de llegada
 
     public WaitingListEntry(String clientName, String clientContact, int numberOfSeats, int entryTime) {
         this.clientName = clientName;

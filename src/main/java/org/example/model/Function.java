@@ -2,6 +2,7 @@ package org.example.model;
 
 import org.example.tda.colas.ColaWaitingList;
 import org.example.tda.conjuntos.ConjuntoTicket;
+import org.example.tda.diccionario.DiccionarioReservation;
 
 public class Function {
 
@@ -14,6 +15,7 @@ public class Function {
     private final int startTime;
     private ColaWaitingList waitingList;
     private int availableSeats;
+    private DiccionarioReservation reservations;
 
     public Function(Film film,
                     LanguageType languageType,
@@ -30,6 +32,8 @@ public class Function {
         this.waitingList = new ColaWaitingList();
         this.waitingList.InicializarCola();
         this.availableSeats = roomCapacity;
+        this.reservations = new DiccionarioReservation();
+        this.reservations.InicializarDiccionario(roomCapacity);
     }
 
     public int getFunctionId() {
@@ -68,14 +72,14 @@ public class Function {
             return false;
         }
 
-        int currentTime = getCurrentTime(); // Métod que devuelve el tiempo actual (podría ser System.currentTimeMillis())
+        int currentTime = getCurrentTime(); // métod que devuelve el tiempo actual (podría ser System.currentTimeMillis())
         WaitingListEntry entry = new WaitingListEntry(clientName, clientContact, numberOfSeats, currentTime);
         waitingList.Acolar(entry);
         return true;
     }
 
     private int getCurrentTime() {
-        // Implementación simple para obtener un timestamp actual
+        // implementación simple para obtener un timestamp actual
         return (int) (System.currentTimeMillis() / 1000);
     }
 
@@ -113,7 +117,7 @@ public class Function {
         return null;
     }
 
-    public String getGenre() {
+    public Genre getGenre() {
         return film.getGenre();
     }
 
@@ -123,6 +127,40 @@ public class Function {
 
     public int getAvailableSeats() {
         return availableSeats;
+    }
+
+    public boolean addReservation(int reservationId, Reservation reservation) {
+        try {
+            // chequea por disponibilidad de asientos
+            if (reservation.getNumberOfSeats() <= availableSeats) {
+                reservations.Agregar(reservationId, reservation);
+                availableSeats -= reservation.getNumberOfSeats();
+                return true;
+            } else {
+                // no hay suficientes asientos
+                return false;
+            }
+        } catch (IllegalStateException e) {
+            // el diccionario esta lleno
+            return false;
+        }
+    }
+
+    public boolean cancelReservation(int reservationId) {
+        Reservation reservation = reservations.Recuperar(reservationId);
+        if (reservation != null) {
+            reservations.Eliminar(reservationId);
+            availableSeats += reservation.getNumberOfSeats();
+
+            // promueve gente de la waitinglist
+            notifyWaitingList(0);
+            return true;
+        }
+        return false;
+    }
+
+    public Reservation getReservation(int reservationId) {
+        return reservations.Recuperar(reservationId);
     }
 
 }
